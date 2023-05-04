@@ -17,3 +17,15 @@ Test(loop_read_until, normal) {
     cr_assert_str_eq(str, "bonjour je m'appelle evan ?How are you?ttttttttt");
     free(str);
 }
+
+Test(loop_read_until, 2) {
+    char *str;
+    int fd;
+
+    fd = open("text.txt", O_RDONLY);
+    str = loop_read_until(fd, ' ');
+    cr_assert_str_eq(str, "bonjour je m'app");
+    free(str);
+}
+
+

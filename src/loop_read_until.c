@@ -24,7 +24,7 @@ char *loop_read_until(int fd, char token)
         i = 0;
         while (i < 16) {
             if (str1[i] == token) {
-                retur++n (str2);
+                return (str2);
             }
             i += 1;
         }
