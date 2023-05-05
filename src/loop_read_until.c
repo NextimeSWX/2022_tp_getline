@@ -10,7 +10,6 @@
 
 char *loop_read_until(int fd, char token)
 {
-    char *result;
     char *str1;
     char *str2;
     int size_read;
@@ -20,19 +19,21 @@ char *loop_read_until(int fd, char token)
     size_read = read(fd, str1, 16);
     str1[size_read] = '\0';
     str2 = strdup(str1);
+    if (str1 == NULL)
+        return (NULL);
     while (size_read > 0) {
         i = 0;
-        while (i < 16) {
-            if (str1[i] == token) {
-                return (str2);
-            }
+        while (i < 16 && str1[i] != '\0' && str1[i] != token) {
             i += 1;
         }
+            if (str1[i] == token) {
+                free(str1);
+                return (str2);
+            }
         size_read = read(fd, str1, 16);
         str1[size_read] = '\0';
-        result = strdup(str2);
-        str2 = strdupcat(result, str1);
-        free(result);
+        str2 = strdup(str2);
+        str2 = strdupcat(str2, str1);
     }
     free(str1);
     return (str2);
